@@ -1,8 +1,8 @@
 package dev.bonnie.thesideways.item;
 
 import dev.bonnie.thesideways.TheSideways;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PotionItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,7 +17,7 @@ public class ModItems {
     public static final RegistryObject<Item> PEANUT_ESSENCE = ITEMS.register("peanut_essence",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PEANUT_JUICE = ITEMS.register("peanut_juice",
-            () -> new Item(new Item.Properties()));
+            () -> new PotionItem(new Item.Properties().food(ModFoods.PEANUT_JUICE).stacksTo(1)));
 
     //  SOMETHING
     public static void register(IEventBus eventBus) {

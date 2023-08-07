@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "thesideways:block/sideways_dirt",
+    "down": "thesideways:block/sideways_dirt",
+    "up": "thesideways:block/sideways_grass_block_top",
+    "north": "thesideways:block/sideways_grass_block_side",
+    "south": "thesideways:block/sideways_grass_block_side",
+    "east": "thesideways:block/sideways_grass_block_side",
+    "west": "thesideways:block/sideways_grass_block_side"
+  }
+}

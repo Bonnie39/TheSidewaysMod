@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "thesideways:block/stripped_nutroot_wood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "thesideways:block/stripped_nutroot_wood"
+    },
+    "axis=z": {
+      "model": "thesideways:block/stripped_nutroot_wood_horizontal",
+      "x": 90
+    }
+  }
+}

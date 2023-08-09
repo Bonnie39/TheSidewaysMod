@@ -51,6 +51,13 @@ public class TheSideways {
             //  BLOCKS
             event.accept(ModBlocks.SIDEWAYS_DIRT);
             event.accept(ModBlocks.SIDEWAYS_GRASS_BLOCK);
+            event.accept(ModBlocks.NUTROOT_LOG);
+            event.accept(ModBlocks.STRIPPED_NUTROOT_LOG);
+            event.accept(ModBlocks.NUTROOT_WOOD);
+            event.accept(ModBlocks.STRIPPED_NUTROOT_WOOD);
+            event.accept(ModBlocks.NUTROOT_PLANKS);
+            event.accept(ModBlocks.NUTROOT_LEAVES);
+            event.accept(ModBlocks.NUTROOT_SAPLING);
         }
     }
 

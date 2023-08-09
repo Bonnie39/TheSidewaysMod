@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "thesideways:nutroot_log",
+    "thesideways:nutroot_wood",
+    "thesideways:stripped_nutroot_log",
+    "thesideways:stripped_nutroot_wood"
+  ]
+}

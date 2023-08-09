@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "thesideways:stripped_nutroot_wood"
+    }
+  ],
+  "result": {
+    "item": "thesideways:nutroot_planks",
+    "count": 4
+  }
+}

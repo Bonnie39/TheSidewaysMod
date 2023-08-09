@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "thesideways:block/stripped_nutroot_log",
+    "side": "thesideways:block/stripped_nutroot_log"
+  }
+}

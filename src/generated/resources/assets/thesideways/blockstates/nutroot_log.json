@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "thesideways:block/nutroot_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "thesideways:block/nutroot_log"
+    },
+    "axis=z": {
+      "model": "thesideways:block/nutroot_log_horizontal",
+      "x": 90
+    }
+  }
+}

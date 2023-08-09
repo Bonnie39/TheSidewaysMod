@@ -5,6 +5,13 @@
 
   "block.thesideways.sideways_dirt": "Sideways Dirt",
   "block.thesideways.sideways_grass_block": "Sideways Grass",
+  "block.thesideways.nutroot_log": "Nutroot Log",
+  "block.thesideways.stripped_nutroot_log": "Stripped Nutroot Log",
+  "block.thesideways.nutroot_wood": "Nutroot Wood",
+  "block.thesideways.stripped_nutroot_wood": "Stripped Nutroot Wood",
+  "block.thesideways.nutroot_planks": "Nutroot Planks",
+  "block.thesideways.nutroot_leaves": "Nutroot Leaves",
+  "block.thesideways.nutroot_sapling": "Nutroot Sapling",
 
   "creativemodetab.sideways_tab": "The Sideways"
 }

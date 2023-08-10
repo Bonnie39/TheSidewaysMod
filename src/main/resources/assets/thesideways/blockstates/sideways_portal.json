@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model":"thesideways:block/sideways_portal_ns"
+    },
+    "axis=z": {
+      "model": "thesideways:block/sideways_portal_ew"
+    }
+  }
+}

@@ -2,6 +2,7 @@ package dev.bonnie.thesideways.block;
 
 import dev.bonnie.thesideways.TheSideways;
 import dev.bonnie.thesideways.block.custom.ModFlammableRotatedPillarBlock;
+import dev.bonnie.thesideways.block.custom.SidewaysPortalBlock;
 import dev.bonnie.thesideways.item.ModItems;
 import dev.bonnie.thesideways.worldgen.tree.NutrootTreeGrower;
 import net.minecraft.core.BlockPos;
@@ -96,6 +97,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> NUTROOT_SAPLING = registerBlock("nutroot_sapling",
             () -> new SaplingBlock(new NutrootTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
+    //  PORTAL
+    public static final RegistryObject<Block> SIDEWAYS_PORTAL = registerBlockWithoutBlockItem("sideways_portal",
+            () -> new SidewaysPortalBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL).lightLevel(state -> 5).noLootTable()));
 
     //  HELPER FUNCTIONS
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
@@ -107,6 +111,10 @@ public class ModBlocks {
         return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(),
                 new Item.Properties()));
     }
+    private static <T extends Block> RegistryObject<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {
+        return BLOCKS.register(name, block);
+    }
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

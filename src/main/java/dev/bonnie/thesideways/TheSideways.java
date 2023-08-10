@@ -64,6 +64,7 @@ public class TheSideways {
             event.accept(ModBlocks.NUTROOT_LEAVES);
             event.accept(ModBlocks.NUTROOT_SAPLING);
             event.accept(ModBlocks.PEANUT_BLOCK);
+            //event.accept(ModBlocks.SIDEWAYS_PORTAL);  //  Crashes game lmao
         }
     }
 

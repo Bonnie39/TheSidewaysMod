@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import dev.bonnie.thesideways.block.ModBlocks;
 import dev.bonnie.thesideways.item.ModCreativeModeTabs;
 import dev.bonnie.thesideways.item.ModItems;
+import dev.bonnie.thesideways.world.TSPoiTypes;
 import dev.bonnie.thesideways.world.dimension.ModDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -36,6 +37,9 @@ public class TheSideways {
 
         //  DIMENSION
         ModDimensions.register();
+
+        //  PORTAL POI
+        TSPoiTypes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);

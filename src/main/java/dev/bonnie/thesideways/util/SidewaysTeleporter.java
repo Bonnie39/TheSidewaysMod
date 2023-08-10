@@ -116,7 +116,7 @@ public class SidewaysTeleporter implements ITeleporter {
             for(int i = -2; i < 3; i++) {
                 for(int j = 0; j < 6; j++) {
                     for(int k = -1; k < 3; k++) {
-                        BlockState blockstate1 = k < 0 ? Blocks.REINFORCED_DEEPSLATE.defaultBlockState() : Blocks.AIR.defaultBlockState();
+                        BlockState blockstate1 = k < 0 ? ModTags.Blocks.PORTAL_FRAME_BLOCKS.defaultBlockState() : Blocks.AIR.defaultBlockState();
                         mutablePos.setWithOffset(blockPos, j * direction.getStepX() + i * direction1.getStepX(), k, j * direction.getStepZ() + i * direction1.getStepZ());
                         this.level.setBlockAndUpdate(mutablePos, blockstate1);
                     }
@@ -128,7 +128,7 @@ public class SidewaysTeleporter implements ITeleporter {
             for(int j = -1; j < 4; j++) {
                 if(i == -1 || i == 6 || j == -1 || j == 3) {
                     mutablePos.setWithOffset(blockPos, i * direction.getStepX(), j, i * direction.getStepZ());
-                    this.level.setBlock(mutablePos, Blocks.REINFORCED_DEEPSLATE.defaultBlockState(), 3);
+                    this.level.setBlock(mutablePos, ModTags.Blocks.PORTAL_FRAME_BLOCKS.defaultBlockState(), 3);
                 }
             }
         }

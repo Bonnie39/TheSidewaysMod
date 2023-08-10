@@ -1,6 +1,7 @@
 package dev.bonnie.thesideways.item;
 
 import dev.bonnie.thesideways.TheSideways;
+import dev.bonnie.thesideways.item.custom.CatalystItem;
 import dev.bonnie.thesideways.item.custom.DrinkableFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PotionItem;
@@ -19,6 +20,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PEANUT_JUICE = ITEMS.register("peanut_juice",
             () -> new DrinkableFoodItem(new Item.Properties().food(ModFoods.PEANUT_JUICE).stacksTo(1)));
+    public static final RegistryObject<Item> SIDEWAYS_CATALYST = ITEMS.register("sideways_catalyst", CatalystItem::new);
 
     //  SOMETHING
     public static void register(IEventBus eventBus) {

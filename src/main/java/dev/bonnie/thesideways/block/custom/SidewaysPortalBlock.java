@@ -3,14 +3,15 @@ package dev.bonnie.thesideways.block.custom;
 import dev.bonnie.thesideways.block.ModBlocks;
 import dev.bonnie.thesideways.util.ModTags;
 import dev.bonnie.thesideways.util.SidewaysTeleporter;
+import dev.bonnie.thesideways.util.TheSidewaysTeleporter;
 import dev.bonnie.thesideways.world.dimension.ModDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -23,56 +24,115 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
-public class SidewaysPortalBlock extends Block {
-    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
-    protected static final VoxelShape X_AXIS_AABB = Block.box(0, 0, 6, 16, 16, 10);
-    protected static final VoxelShape Z_AXIS_AABB = Block.box(6, 0, 0, 10, 16, 16);
+import javax.annotation.Nullable;
+import java.util.Random;
 
-    public SidewaysPortalBlock(Properties pProperties) {
-        super(pProperties);
+public class SidewaysPortalBlock extends Block implements SidewaysPortalBlockAnimateTick {
+    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
+    protected static final VoxelShape X_AABB = Block.box(0.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D);
+    protected static final VoxelShape Z_AABB = Block.box(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
+
+    public SidewaysPortalBlock() {
+        super(Properties.of(Material.PORTAL)
+                .strength(-1F)
+                .noCollission()
+                .lightLevel((state) -> 10)
+                .noLootTable()
+        );
         registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.X));
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        if(pState.getValue(AXIS) == Direction.Axis.X) return X_AXIS_AABB;
-        return Z_AXIS_AABB;
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        switch(state.getValue(AXIS)) {
+            case Z:
+                return Z_AABB;
+            case X:
+            default:
+                return X_AABB;
+        }
+    }
+
+    public boolean trySpawnPortal(LevelAccessor worldIn, BlockPos pos) {
+        SidewaysPortalBlock.Size SidewaysPortalBlock$size = this.isPortal(worldIn, pos);
+        if (SidewaysPortalBlock$size != null && !onTrySpawnPortal(worldIn, pos, SidewaysPortalBlock$size)) {
+            SidewaysPortalBlock$size.placePortalBlocks();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean onTrySpawnPortal(LevelAccessor world, BlockPos pos, SidewaysPortalBlock.Size size) {
+        return MinecraftForge.EVENT_BUS.post(new PortalSpawnEvent(world, pos, world.getBlockState(pos), size));
+    }
+
+    @Cancelable
+    public static class PortalSpawnEvent extends BlockEvent {
+        private final SidewaysPortalBlock.Size size;
+
+        public PortalSpawnEvent(LevelAccessor world, BlockPos pos, BlockState state, SidewaysPortalBlock.Size size) {
+            super(world, pos, state);
+            this.size = size;
+        }
+
+        public SidewaysPortalBlock.Size getPortalSize()
+        {
+            return size;
+        }
+    }
+
+    @Nullable
+    public SidewaysPortalBlock.Size isPortal(LevelAccessor worldIn, BlockPos pos) {
+        SidewaysPortalBlock.Size SidewaysPortalBlock$size = new Size(worldIn, pos, Direction.Axis.X);
+        if (SidewaysPortalBlock$size.isValid() && SidewaysPortalBlock$size.portalBlockCount == 0) {
+            return SidewaysPortalBlock$size;
+        } else {
+            SidewaysPortalBlock.Size KaupenPortalBlock$size1 = new Size(worldIn, pos, Direction.Axis.Z);
+            return KaupenPortalBlock$size1.isValid() && KaupenPortalBlock$size1.portalBlockCount == 0 ? KaupenPortalBlock$size1 : null;
+        }
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
-        Direction.Axis facingAxis = pDirection.getAxis();
-        Direction.Axis axis = pState.getValue(AXIS);
-        boolean flag = axis != facingAxis && facingAxis.isHorizontal();
-        return !flag && !pNeighborState.is(this) && !(new OthersidePortalShape(pLevel, pCurrentPos, axis)).isComplete() ? Blocks.AIR.defaultBlockState() : super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+        Direction.Axis direction$axis = facing.getAxis();
+        Direction.Axis direction$axis1 = stateIn.getValue(AXIS);
+        boolean flag = direction$axis1 != direction$axis && direction$axis.isHorizontal();
+        return !flag && facingState.getBlock() != this && !(new Size(worldIn, currentPos, direction$axis1)).validatePortal() ?
+                Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     @Override
-    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if(!pEntity.isPassenger() && !pEntity.isVehicle() && pEntity.canChangeDimensions()) {
-            if(pEntity.isOnPortalCooldown()) {
-                pEntity.setPortalCooldown();
-            } else {
-                if(!pEntity.level.isClientSide && !pPos.equals(pEntity.portalEntrancePos)) pEntity.portalEntrancePos = pPos.immutable();
-
-                Level entityWorld = pEntity.level;
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+        if(!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
+            if(entity.isOnPortalCooldown()) {
+                entity.setPortalCooldown();
+            }
+            else {
+                if(!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
+                    entity.portalEntrancePos = pos.immutable();
+                }
+                Level entityWorld = entity.level;
                 if(entityWorld != null) {
                     MinecraftServer minecraftserver = entityWorld.getServer();
-                    ResourceKey<Level> destination = pEntity.level.dimension() == ModDimensions.SIDEWAYS_KEY ? Level.OVERWORLD : ModDimensions.SIDEWAYS_KEY;
-
+                    ResourceKey<Level> destination = entity.level.dimension() == ModDimensions.SIDEWAYS_KEY
+                            ? Level.OVERWORLD : ModDimensions.SIDEWAYS_KEY;
                     if(minecraftserver != null) {
                         ServerLevel destinationWorld = minecraftserver.getLevel(destination);
-                        if(destinationWorld != null && minecraftserver.isNetherEnabled() && !pEntity.isPassenger()) {
-                            pEntity.level.getProfiler().push("SIDEWAYS_PORTAL");
-                            pEntity.setPortalCooldown();
-                            pEntity.changeDimension(destinationWorld, new SidewaysTeleporter(destinationWorld));
-                            pEntity.level.getProfiler().pop();
+                        if(destinationWorld != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
+                            entity.level.getProfiler().push("SIDEWAYS_PORTAL");
+                            entity.setPortalCooldown();
+                            entity.changeDimension(destinationWorld, new TheSidewaysTeleporter(destinationWorld));
+                            entity.level.getProfiler().pop();
                         }
                     }
                 }
@@ -80,190 +140,200 @@ public class SidewaysPortalBlock extends Block {
         }
     }
 
-    @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        if(pRandom.nextFloat() < 0.0007) {
-            //pLevel.playLocalSound(pPos.getX() + 0.5d, pPos.getY() + 0.5d, pPos.getZ() + 0.5d, DDSounds.PORTAL_GROAN.get(), SoundSource.BLOCKS, 0.2f, pRandom.nextFloat() * 0.2f + 0.9f, false);
+    @OnlyIn(Dist.CLIENT)
+    //@Override
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+        if (rand.nextInt(100) == 0) {
+            worldIn.playLocalSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D,
+                    (double)pos.getZ() + 0.5D, SoundEvents.PORTAL_AMBIENT,
+                    SoundSource.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+        }
+
+        for(int i = 0; i < 4; ++i) {
+            double x = (double)pos.getX() + rand.nextDouble();
+            double y = (double)pos.getY() + rand.nextDouble();
+            double z = (double)pos.getZ() + rand.nextDouble();
+            double xSpeed = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+            double ySpeed = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+            double zSpeed = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+            int j = rand.nextInt(2) * 2 - 1;
+            if (!worldIn.getBlockState(pos.west()).is(this) && !worldIn.getBlockState(pos.east()).is(this)) {
+                x = (double)pos.getX() + 0.5D + 0.25D * (double)j;
+                xSpeed = rand.nextFloat() * 2.0F * (float)j;
+            } else {
+                z = (double)pos.getZ() + 0.5D + 0.25D * (double)j;
+                zSpeed = rand.nextFloat() * 2.0F * (float)j;
+            }
+
+            // TODO: Particles
+            // worldIn.addParticle(PARTICLE_TYPE, x, y, z, xSpeed, ySpeed, zSpeed);
         }
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter pLevel, BlockPos pPos, BlockState pState) {
+    public ItemStack getCloneItemStack(BlockGetter worldIn, BlockPos pos, BlockState state) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public BlockState rotate(BlockState pState, Rotation pRotation) {
-        return switch (pRotation) {
-            case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (pState.getValue(AXIS)) {
-                case Z -> pState.setValue(AXIS, Direction.Axis.X);
-                case X -> pState.setValue(AXIS, Direction.Axis.Z);
-                default -> pState;
-            };
-            default -> pState;
-        };
+    public BlockState rotate(BlockState state, Rotation rot) {
+        switch(rot) {
+            case COUNTERCLOCKWISE_90:
+            case CLOCKWISE_90:
+                switch(state.getValue(AXIS)) {
+                    case Z:
+                        return state.setValue(AXIS, Direction.Axis.X);
+                    case X:
+                        return state.setValue(AXIS, Direction.Axis.Z);
+                    default:
+                        return state;
+                }
+            default:
+                return state;
+        }
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(AXIS);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(AXIS);
     }
 
-    public boolean spawnPortal(LevelAccessor worldIn, BlockPos pos) {
-        OthersidePortalShape portal = this.isPortal(worldIn, pos);
-        if(portal != null && !trySpawningPortal(worldIn, pos, portal)) {
-            portal.createPortalBlocks();
-            return true;
-        } else return false;
-    }
-
-    public static boolean trySpawningPortal(LevelAccessor world, BlockPos pos, OthersidePortalShape portal) {
-        return MinecraftForge.EVENT_BUS.post(new PortalSpawnEvent(world, pos, world.getBlockState(pos), portal));
-    }
-
-    public OthersidePortalShape isPortal(LevelAccessor level, BlockPos pos) {
-        OthersidePortalShape portalX = new OthersidePortalShape(level, pos, Direction.Axis.X);
-        if(portalX.isValid() && portalX.numPortalBlocks == 0) {
-            return portalX;
-        } else {
-            OthersidePortalShape portalZ = new OthersidePortalShape(level, pos, Direction.Axis.Z);
-            return portalZ.isValid() && portalZ.numPortalBlocks == 0 ? portalZ : null;
-        }
-    }
-
-    @Cancelable
-    public static class PortalSpawnEvent extends BlockEvent {
-        private final OthersidePortalShape size;
-
-        public PortalSpawnEvent(LevelAccessor world, BlockPos pos, BlockState state, OthersidePortalShape size) {
-            super(world, pos, state);
-            this.size = size;
-        }
-
-        public OthersidePortalShape getPortalSize() {
-            return size;
-        }
-    }
-
-    /**
-     * because PortalShape hard-codes nether portal stuff
-     */
-    public static class OthersidePortalShape {
-        public static final int MIN_WIDTH = 2;
-        public static final int MIN_HEIGHT = 2;
-        public static final int MAX_WIDTH = 21;
-        public static final int MAX_HEIGHT = 21;
-
+    public static class Size {
         private final LevelAccessor level;
         private final Direction.Axis axis;
         private final Direction rightDir;
+        private final Direction leftDir;
+        private int portalBlockCount;
+        @Nullable
         private BlockPos bottomLeft;
-        private int numPortalBlocks;
         private int height;
-        private final int width;
+        private int width;
 
-        public OthersidePortalShape(LevelAccessor pLevel, BlockPos pBottomLeft, Direction.Axis pAxis) {
-            this.level = pLevel;
-            this.axis = pAxis;
-            this.rightDir = pAxis == Direction.Axis.X ? Direction.WEST : Direction.SOUTH;
-            this.bottomLeft = this.calculateBottomLeft(pBottomLeft);
-
-            if(this.bottomLeft == null) {
-                this.bottomLeft = pBottomLeft;
-                this.width = 1;
-                this.height = 1;
+        public Size(LevelAccessor level, BlockPos pos, Direction.Axis axis) {
+            this.level = level;
+            this.axis = axis;
+            if (axis == Direction.Axis.X) {
+                this.leftDir = Direction.EAST;
+                this.rightDir = Direction.WEST;
             } else {
-                this.width = this.calculateWidth();
-                if(this.width > 0) {
-                    this.height = this.calculateHeight();
-                }
+                this.leftDir = Direction.NORTH;
+                this.rightDir = Direction.SOUTH;
             }
-        }
 
-        private BlockPos calculateBottomLeft(BlockPos pos) {
-            for(int i = Math.max(this.level.getMinBuildHeight(), pos.getY() - 21); pos.getY() > i && isEmpty(this.level.getBlockState(pos.below())); pos = pos.below()) { }
+            for(BlockPos blockpos = pos; pos.getY() > blockpos.getY() - 21 && pos.getY() > 0 && this.canConnect(level.getBlockState(pos.below())); pos = pos.below()) {
+            }
 
-            Direction direction = this.rightDir.getOpposite();
-            int j = this.getFrameWidth(pos, direction) - 1;
-            return j < 0 ? null : pos.relative(direction, j);
-        }
-
-        private int calculateHeight() {
-            BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
-            int i = this.getFrameHeight(blockPos);
-            return i >= MIN_HEIGHT && i <= MAX_HEIGHT && this.hasTopFrame(blockPos, i) ? i : 0;
-        }
-
-        private int calculateWidth() {
-            int i = this.getFrameWidth(this.bottomLeft, this.rightDir);
-            return i >= MIN_WIDTH && i <= MAX_WIDTH ? i : 0;
-        }
-
-        private int getFrameHeight(BlockPos.MutableBlockPos pPos) {
-            for(int i = 0; i < MAX_HEIGHT; i++) {
-                pPos.set(this.bottomLeft).move(Direction.UP, i).move(this.rightDir, -1);
-                //if(!this.level.getBlockState(pPos).is(Blocks.REINFORCED_DEEPSLATE)) return i;
-                if(!this.level.getBlockState(pPos).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS)) return i;
-
-                pPos.set(this.bottomLeft).move(Direction.UP, i).move(this.rightDir, this.width);
-                if(!this.level.getBlockState(pPos).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS)) return i;
-
-                for(int j = 0; j < this.width; j++) {
-                    pPos.set(this.bottomLeft).move(Direction.UP, i).move(this.rightDir, j);
-                    BlockState blockState = this.level.getBlockState(pPos);
-                    if(!isEmpty(blockState)) return i;
-
-                    if(blockState.is(ModBlocks.SIDEWAYS_PORTAL.get())) this.numPortalBlocks++;
+            int i = this.getDistanceUntilEdge(pos, this.leftDir) - 1;
+            if (i >= 0) {
+                this.bottomLeft = pos.relative(this.leftDir, i);
+                this.width = this.getDistanceUntilEdge(this.bottomLeft, this.rightDir);
+                if (this.width < 2 || this.width > 21) {
+                    this.bottomLeft = null;
+                    this.width = 0;
                 }
             }
 
-            return MAX_HEIGHT;
+            if (this.bottomLeft != null) {
+                this.height = this.calculatePortalHeight();
+            }
+
         }
 
-        private int getFrameWidth(BlockPos pPos, Direction pDirection) {
-            BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
-
-            for(int i = 0; i <= MAX_HEIGHT; i++) {
-                blockPos.set(pPos).move(pDirection, i);
-                BlockState blockState = this.level.getBlockState(blockPos);
-                if(!isEmpty(blockState)) {
-                    if(blockState.is(ModTags.Blocks.PORTAL_FRAME_BLOCKS)) return i;
+        protected int getDistanceUntilEdge(BlockPos pos, Direction directionIn) {
+            int i;
+            for(i = 0; i < 22; ++i) {
+                BlockPos blockpos = pos.relative(directionIn, i);
+                if(!this.canConnect(this.level.getBlockState(blockpos)) ||
+                        !(this.level.getBlockState(blockpos.below()).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS))) {
                     break;
                 }
-
-                BlockState blockStateDown = this.level.getBlockState(blockPos.move(Direction.DOWN));
-                if(!blockStateDown.is(ModTags.Blocks.PORTAL_FRAME_BLOCKS)) break;
             }
 
-            return 0;
+            BlockPos framePos = pos.relative(directionIn, i);
+            return this.level.getBlockState(framePos).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS) ? i : 0;
         }
 
-        private boolean hasTopFrame(BlockPos.MutableBlockPos pPos, int pN) {
-            for(int i = 0; i < this.width; i++) {
-                BlockPos.MutableBlockPos blockPos = pPos.set(this.bottomLeft).move(Direction.UP, pN).move(this.rightDir, i);
-                if(!this.level.getBlockState(blockPos).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS)) {
-                    return false;
+        public int getHeight() {
+            return this.height;
+        }
+
+        public int getWidth() {
+            return this.width;
+        }
+
+        protected int calculatePortalHeight() {
+            label56:
+            for(this.height = 0; this.height < 21; ++this.height) {
+                for(int i = 0; i < this.width; ++i) {
+                    BlockPos blockpos = this.bottomLeft.relative(this.rightDir, i).above(this.height);
+                    BlockState blockstate = this.level.getBlockState(blockpos);
+                    if (!this.canConnect(blockstate)) {
+                        break label56;
+                    }
+
+                    Block block = blockstate.getBlock();
+                    if (block == ModBlocks.SIDEWAYS_PORTAL.get()) {
+                        ++this.portalBlockCount;
+                    }
+
+                    if (i == 0) {
+                        BlockPos framePos = blockpos.relative(this.leftDir);
+                        if (!(this.level.getBlockState(framePos).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS))) {
+                            break label56;
+                        }
+                    } else if (i == this.width - 1) {
+                        BlockPos framePos = blockpos.relative(this.rightDir);
+                        if (!(this.level.getBlockState(framePos).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS))) {
+                            break label56;
+                        }
+                    }
                 }
             }
 
-            return true;
+            for(int j = 0; j < this.width; ++j) {
+                BlockPos framePos = this.bottomLeft.relative(this.rightDir, j).above(this.height);
+                if (!(this.level.getBlockState(framePos).is(ModTags.Blocks.PORTAL_FRAME_BLOCKS))) {
+                    this.height = 0;
+                    break;
+                }
+            }
+
+            if (this.height <= 21 && this.height >= 3) {
+                return this.height;
+            } else {
+                this.bottomLeft = null;
+                this.width = 0;
+                this.height = 0;
+                return 0;
+            }
         }
 
-        public void createPortalBlocks() {
-            BlockState blockstate = ModBlocks.SIDEWAYS_PORTAL.get().defaultBlockState().setValue(SidewaysPortalBlock.AXIS, this.axis);
-            BlockPos.betweenClosed(this.bottomLeft, this.bottomLeft.relative(Direction.UP, this.height - 1).relative(this.rightDir, this.width - 1)).forEach((blockPos) -> this.level.setBlock(blockPos, blockstate, 18));
-        }
-
-        public boolean isComplete() {
-            return this.isValid() && this.numPortalBlocks == this.width * this.height;
+        protected boolean canConnect(BlockState pos) {
+            Block block = pos.getBlock();
+            return pos.isAir() || block == ModBlocks.SIDEWAYS_PORTAL.get();
         }
 
         public boolean isValid() {
-            return this.bottomLeft != null && this.width >= MIN_WIDTH && this.width <= MAX_WIDTH && this.height >= MIN_HEIGHT && this.height <= MAX_HEIGHT;
+            return this.bottomLeft != null && this.width >= 2 && this.width <= 21 && this.height >= 3 && this.height <= 21;
         }
 
-        private static boolean isEmpty(BlockState pState) {
-            return pState.isAir() || pState.is(ModBlocks.SIDEWAYS_PORTAL.get());
+        public void placePortalBlocks() {
+            for(int i = 0; i < this.width; ++i) {
+                BlockPos blockpos = this.bottomLeft.relative(this.rightDir, i);
+
+                for(int j = 0; j < this.height; ++j) {
+                    this.level.setBlock(blockpos.above(j), ModBlocks.SIDEWAYS_PORTAL.get().defaultBlockState().setValue(SidewaysPortalBlock.AXIS, this.axis), 18);
+                }
+            }
+
+        }
+
+        private boolean isPortalCountValidForSize() {
+            return this.portalBlockCount >= this.width * this.height;
+        }
+
+        public boolean validatePortal() {
+            return this.isValid() && this.isPortalCountValidForSize();
         }
     }
 }

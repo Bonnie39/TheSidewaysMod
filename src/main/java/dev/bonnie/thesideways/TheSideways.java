@@ -56,6 +56,7 @@ public class TheSideways {
             //  ITEMS
             event.accept(ModItems.PEANUT_ESSENCE);
             event.accept(ModItems.PEANUT_JUICE);
+            event.accept(ModItems.SIDEWAYS_CATALYST);
 
             //  BLOCKS
             event.accept(ModBlocks.SIDEWAYS_DIRT);

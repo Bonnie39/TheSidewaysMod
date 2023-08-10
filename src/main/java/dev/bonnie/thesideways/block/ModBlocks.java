@@ -99,7 +99,7 @@ public class ModBlocks {
 
     //  PORTAL
     public static final RegistryObject<Block> SIDEWAYS_PORTAL = registerBlockWithoutBlockItem("sideways_portal",
-            () -> new SidewaysPortalBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL).lightLevel(state -> 5).noLootTable()));
+            SidewaysPortalBlock::new);
 
     //  HELPER FUNCTIONS
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

@@ -20,6 +20,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(ModBlocks.SIDEWAYS_DIRT);
+        blockWithItem(ModBlocks.PEANUT_BLOCK);
+        blockWithItem(ModBlocks.SIDEWAYS_STONE);
+        blockWithItem(ModBlocks.SIDEWAYS_COBBLESTONE);
 
         logBlock(((RotatedPillarBlock) ModBlocks.NUTROOT_LOG.get()));
         axisBlock((RotatedPillarBlock) ModBlocks.NUTROOT_WOOD.get(), blockTexture(ModBlocks.NUTROOT_LOG.get()), blockTexture(ModBlocks.NUTROOT_LOG.get()));

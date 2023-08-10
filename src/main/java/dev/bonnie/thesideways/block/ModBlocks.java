@@ -32,6 +32,13 @@ public class ModBlocks {
     public static final RegistryObject<Block> SIDEWAYS_GRASS_BLOCK = registerBlock("sideways_grass_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.DIRT)
                     .strength(0.6f).sound(SoundType.GRASS).explosionResistance(0.6f)));
+    public static final RegistryObject<Block> SIDEWAYS_STONE = registerBlock("sideways_stone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<Block> SIDEWAYS_COBBLESTONE = registerBlock("sideways_cobblestone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)));
+    public static final RegistryObject<Block> PEANUT_BLOCK = registerBlock("peanut_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
+                    .strength(2f).sound(SoundType.WOOD).explosionResistance(2f)));
 
     //  NUTROOT LOGS & WOOD
     public static final RegistryObject<Block> NUTROOT_LOG = registerBlock("nutroot_log",

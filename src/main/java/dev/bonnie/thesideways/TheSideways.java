@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import dev.bonnie.thesideways.block.ModBlocks;
 import dev.bonnie.thesideways.item.ModCreativeModeTabs;
 import dev.bonnie.thesideways.item.ModItems;
+import dev.bonnie.thesideways.world.dimension.ModDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
@@ -29,8 +30,12 @@ public class TheSideways {
     public TheSideways() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        //  ITEMS AND BLOCKS
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        //  DIMENSION
+        ModDimensions.register();
 
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
@@ -58,6 +63,7 @@ public class TheSideways {
             event.accept(ModBlocks.NUTROOT_PLANKS);
             event.accept(ModBlocks.NUTROOT_LEAVES);
             event.accept(ModBlocks.NUTROOT_SAPLING);
+            event.accept(ModBlocks.PEANUT_BLOCK);
         }
     }
 

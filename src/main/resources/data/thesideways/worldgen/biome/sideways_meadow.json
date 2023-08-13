@@ -1,0 +1,65 @@
+{
+  "carvers": {},
+  "creature_spawn_probability": 0.25,
+  "downfall": 0.0,
+  "effects": {
+    "fog_color": 12365203,
+    "foliage_color": 16236652,
+    "grass_color": 16236652,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000
+    },
+    "sky_color": 16770752,
+    "water_color": 7234106,
+    "water_fog_color": 3024399
+  },
+  "features": [
+    [],
+    [
+      "thesideways:water_lake"
+    ],
+    [
+      "minecraft:amethyst_geode"
+    ],
+    [],
+    [],
+    [],
+    [
+
+
+
+
+
+    ],
+    [],
+    [
+      "thesideways:water_spring"
+    ],
+    [
+      "thesideways:nutroot_meadow_trees",
+      "thesideways:grass_patch",
+      "thesideways:tall_grass_patch"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {
+
+  },
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.8
+}

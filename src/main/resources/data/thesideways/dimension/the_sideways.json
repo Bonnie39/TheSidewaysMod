@@ -6,7 +6,7 @@
       "type": "minecraft:multi_noise",
       "biomes": [
         {
-          "biome": "thesideways:sideways",
+          "biome": "thesideways:sideways_meadow",
           "parameters": {
             "continentalness": [
               -1.0,

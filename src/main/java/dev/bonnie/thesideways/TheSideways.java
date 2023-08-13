@@ -1,11 +1,14 @@
 package dev.bonnie.thesideways;
 
+import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import dev.bonnie.thesideways.block.ModBlocks;
 import dev.bonnie.thesideways.item.ModCreativeModeTabs;
 import dev.bonnie.thesideways.item.ModItems;
 import dev.bonnie.thesideways.world.TSPoiTypes;
 import dev.bonnie.thesideways.world.dimension.ModDimensions;
+import dev.bonnie.thesideways.world.feature.SidewaysFeatures;
+import dev.bonnie.thesideways.world.placementmodifier.TheSidewaysPlacementModifiers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
@@ -20,6 +23,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -30,6 +34,14 @@ public class TheSideways {
 
     public TheSideways() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        DeferredRegister<?>[] registers = {
+                SidewaysFeatures.FEATURES,
+        };
+
+        for (DeferredRegister<?> register : registers) {
+            register.register(modEventBus);
+        }
 
         //  ITEMS AND BLOCKS
         ModItems.register(modEventBus);
@@ -48,7 +60,7 @@ public class TheSideways {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        Reflection.initialize(TheSidewaysPlacementModifiers.class);
     }
 
     private void addCreative(CreativeModeTabEvent.BuildContents event) {
@@ -60,6 +72,8 @@ public class TheSideways {
 
             //  BLOCKS
             event.accept(ModBlocks.SIDEWAYS_DIRT);
+            event.accept(ModBlocks.SIDEWAYS_STONE);
+            event.accept(ModBlocks.SIDEWAYS_COBBLESTONE);
             event.accept(ModBlocks.SIDEWAYS_GRASS_BLOCK);
             event.accept(ModBlocks.NUTROOT_LOG);
             event.accept(ModBlocks.STRIPPED_NUTROOT_LOG);

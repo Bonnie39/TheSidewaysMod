@@ -2,6 +2,8 @@ package dev.bonnie.thesideways.worldgen;
 
 import dev.bonnie.thesideways.TheSideways;
 import dev.bonnie.thesideways.block.ModBlocks;
+import dev.bonnie.thesideways.world.feature.SidewaysFeatureRules;
+import dev.bonnie.thesideways.world.feature.SidewaysFeatureStates;
 import dev.bonnie.thesideways.world.feature.SidewaysFeatures;
 import dev.bonnie.thesideways.world.feature.builder.SidewaysConfiguredFeatureBuilders;
 import net.minecraft.core.HolderGetter;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -32,6 +35,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> NUTROOT_TREE_CONFIGURATION = registerKey("nutroot_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GRASS_PATCH_CONFIGURATION = registerKey("grass_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_GRASS_PATCH_CONFIGURATION = registerKey("tall_grass_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_LUMINITE_CONFIGURATION = registerKey("luminite_ore");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -61,6 +65,8 @@ public class ModConfiguredFeatures {
         register(context, TREES_NUTROOT_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                 PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(NUTROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(ModBlocks.NUTROOT_SAPLING.get())), 0.01F)),   //  cuz i copied from Aether and thats just the way it is
                 PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(NUTROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(ModBlocks.NUTROOT_SAPLING.get()))));
+
+        register(context, ORE_LUMINITE_CONFIGURATION, Feature.ORE, new OreConfiguration(SidewaysFeatureRules.SIDEWAYS_STONE, SidewaysFeatureStates.LUMINITE_ORE, 16));
     }
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(TheSideways.MOD_ID, name));

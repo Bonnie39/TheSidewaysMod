@@ -21,6 +21,10 @@ public class ModItems {
     public static final RegistryObject<Item> PEANUT_JUICE = ITEMS.register("peanut_juice",
             () -> new DrinkableFoodItem(new Item.Properties().food(ModFoods.PEANUT_JUICE).stacksTo(1)));
     public static final RegistryObject<Item> SIDEWAYS_CATALYST = ITEMS.register("sideways_catalyst", CatalystItem::new);
+    public static final RegistryObject<Item> RAW_LUMINITE = ITEMS.register("raw_luminite",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LUMINITE_SHARD = ITEMS.register("luminite_shard",
+            () -> new Item(new Item.Properties()));
 
     //  SOMETHING
     public static void register(IEventBus eventBus) {

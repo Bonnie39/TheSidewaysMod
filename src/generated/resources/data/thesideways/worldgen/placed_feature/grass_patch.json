@@ -1,15 +1,11 @@
 {
-  "feature": "thesideways:tall_grass_patch",
+  "feature": "thesideways:grass_patch",
   "placement": [
     {
       "type": "minecraft:noise_threshold_count",
-      "above_noise": 7,
-      "below_noise": 0,
+      "above_noise": 10,
+      "below_noise": 5,
       "noise_level": -0.8
-    },
-    {
-      "type": "minecraft:rarity_filter",
-      "chance": 32
     },
     {
       "type": "thesideways:improved_layer_placement",
@@ -25,6 +21,10 @@
     },
     {
       "type": "minecraft:biome"
+    },
+    {
+      "type": "thesideways:config_filter",
+      "value": "[World Generation, Generate Tall Grass in The Sideways]"
     }
   ]
 }

@@ -37,6 +37,8 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public static final RegistryObject<Block> SIDEWAYS_COBBLESTONE = registerBlock("sideways_cobblestone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)));
+    public static final RegistryObject<Block> LUMINITE_ORE = registerBlock("luminite_ore",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
     public static final RegistryObject<Block> PEANUT_BLOCK = registerBlock("peanut_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
                     .strength(2f).sound(SoundType.WOOD).explosionResistance(2f)));

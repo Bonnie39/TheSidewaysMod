@@ -13,11 +13,7 @@
     "top": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "thesideways:sideways_grass_block",
-        "Properties": {
-          "double_drops": "false",
-          "snowy": "false"
-        }
+        "Name": "thesideways:sideways_grass_block"
       }
     }
   }

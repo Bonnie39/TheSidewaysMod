@@ -1,4 +1,5 @@
-// 1.19.4	2023-08-10T10:32:27.1648374	Loot Tables
+// 1.19.4	2023-08-13T19:01:58.0675342	Loot Tables
+8c1437ddb3c3cc74f8e559ac8bc66f868abd3156 data/thesideways/loot_tables/blocks/luminite_ore.json
 c5380fbc01cbe1a246d3771cd5a0f0685ad0c539 data/thesideways/loot_tables/blocks/nutroot_leaves.json
 f428e25fedc7b3a7ff44c073ef1a016f3e4ea362 data/thesideways/loot_tables/blocks/nutroot_log.json
 da900aba2d686fda35cf930073a007bbd5cb8ce3 data/thesideways/loot_tables/blocks/nutroot_planks.json
@@ -8,6 +9,6 @@ febef7f363fa62380947fd91cbd2da7cbbaa9691 data/thesideways/loot_tables/blocks/nut
 d5af7c6f688d91aef56b3e39167f54cdf5a5b70f data/thesideways/loot_tables/blocks/sideways_cobblestone.json
 60f1b1a6e6bd1b3bca01f51574d2500263428bce data/thesideways/loot_tables/blocks/sideways_dirt.json
 8b370362b59a809177052e8e531e92584ac5535e data/thesideways/loot_tables/blocks/sideways_grass_block.json
-04a3fa47b9866cfe5bdfcf80397df8b6e5ac76b2 data/thesideways/loot_tables/blocks/sideways_stone.json
+14c5503c11ce32fedefa2ff975ef4b3209eb5715 data/thesideways/loot_tables/blocks/sideways_stone.json
 b697d0a9622236862512d8db6062b6889226042e data/thesideways/loot_tables/blocks/stripped_nutroot_log.json
 77915387b0d3e41ce15399ca22749123eaab3054 data/thesideways/loot_tables/blocks/stripped_nutroot_wood.json

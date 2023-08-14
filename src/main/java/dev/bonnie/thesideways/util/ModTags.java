@@ -12,6 +12,9 @@ public class ModTags {
         public static final TagKey<Block> PORTAL_FRAME_BLOCKS
                 = tag("portal_frame_blocks");
 
+        public static final TagKey<Block> SIDEWAYS_STONE
+                = tag("sideways_stone");
+
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(TheSideways.MOD_ID, name));
         }

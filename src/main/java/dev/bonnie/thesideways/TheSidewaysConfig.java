@@ -10,7 +10,7 @@ public class TheSidewaysConfig {
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("World Generation");
             generate_tall_grass = builder
-                    .define("Generate Tall Grass in the Aether", true);
+                    .define("Generate Tall Grass in The Sideways", true);
             builder.pop();
         }
     }

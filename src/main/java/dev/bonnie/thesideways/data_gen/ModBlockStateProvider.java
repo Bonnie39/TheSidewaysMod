@@ -23,6 +23,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.PEANUT_BLOCK);
         blockWithItem(ModBlocks.SIDEWAYS_STONE);
         blockWithItem(ModBlocks.SIDEWAYS_COBBLESTONE);
+        blockWithItem(ModBlocks.LUMINITE_ORE);
 
         logBlock(((RotatedPillarBlock) ModBlocks.NUTROOT_LOG.get()));
         axisBlock((RotatedPillarBlock) ModBlocks.NUTROOT_WOOD.get(), blockTexture(ModBlocks.NUTROOT_LOG.get()), blockTexture(ModBlocks.NUTROOT_LOG.get()));

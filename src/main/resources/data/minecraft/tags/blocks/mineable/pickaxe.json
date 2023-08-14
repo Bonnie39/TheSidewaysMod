@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "thesideways:sideways_stone",
-    "thesideways:sideways_cobblestone"
+    "thesideways:sideways_cobblestone",
+    "thesideways:luminite_ore"
   ]
 }

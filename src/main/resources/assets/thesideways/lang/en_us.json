@@ -1,8 +1,11 @@
 {
+  "item.thesideways.sideways_catalyst": "Sideways Catalyst",
   "item.thesideways.peanut_essence": "Peanut Essence",
   "item.thesideways.peanut_juice": "Peanut Juice",
-  "item.thesideways.peanut_juice.effect.empty": "Peanut Juice",
+  "item.thesideways.raw_luminite": "Raw Luminite",
+  "item.thesideways.luminite_shard": "Luminite Shard",
 
+  "block.thesideways.peanut_block": "Peanut Block",
   "block.thesideways.sideways_dirt": "Sideways Dirt",
   "block.thesideways.sideways_grass_block": "Sideways Grass",
   "block.thesideways.nutroot_log": "Nutroot Log",
@@ -12,6 +15,9 @@
   "block.thesideways.nutroot_planks": "Nutroot Planks",
   "block.thesideways.nutroot_leaves": "Nutroot Leaves",
   "block.thesideways.nutroot_sapling": "Nutroot Sapling",
+  "block.thesideways.sideways_stone": "Sideways Stone",
+  "block.thesideways.sideways_cobblestone": "Sideways Cobblestone",
+  "block.thesideways.luminite_ore": "Luminite Ore",
 
   "creativemodetab.sideways_tab": "The Sideways"
 }

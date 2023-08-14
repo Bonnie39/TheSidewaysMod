@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
@@ -27,6 +28,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> NUTROOT_MEADOW_TREES_PLACEMENT = createKey("nutroot_meadow_trees");
     public static final ResourceKey<PlacedFeature> GRASS_PATCH_PLACEMENT = createKey("grass_patch");
     public static final ResourceKey<PlacedFeature> TALL_GRASS_PATCH_PLACEMENT = createKey("tall_grass_patch");
+    public static final ResourceKey<PlacedFeature> ORE_LUMINITE_PLACEMENT = createKey("luminite_ore");
 
     private static ResourceKey<PlacedFeature> createKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(TheSideways.MOD_ID, name));
@@ -55,6 +57,9 @@ public class ModPlacedFeatures {
 
         register(context, NUTROOT_MEADOW_TREES_PLACEMENT, configuredFeatures.getOrThrow(ModConfiguredFeatures.TREES_NUTROOT_CONFIGURATION),
                 SidewaysPlacedFeatureBuilders.treePlacement(RarityFilter.onAverageOnceEvery(1)));
+
+        register(context, ORE_LUMINITE_PLACEMENT, configuredFeatures.getOrThrow(ModConfiguredFeatures.ORE_LUMINITE_CONFIGURATION),
+                SidewaysPlacedFeatureBuilders.commonOrePlacement(20, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(128))));
     }
 
     private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {

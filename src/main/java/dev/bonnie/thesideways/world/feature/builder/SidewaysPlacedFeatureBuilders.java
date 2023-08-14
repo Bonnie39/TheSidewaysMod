@@ -20,4 +20,12 @@ public class SidewaysPlacedFeatureBuilders {
                 .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
                 .add(BiomeFilter.biome());
     }
+
+    public static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier heightRange) {
+        return orePlacement(CountPlacement.of(count), heightRange);
+    }
+
+    private static List<PlacementModifier> orePlacement(PlacementModifier count, PlacementModifier heightRange) {
+        return List.of(count, InSquarePlacement.spread(), heightRange, BiomeFilter.biome());
+    }
 }

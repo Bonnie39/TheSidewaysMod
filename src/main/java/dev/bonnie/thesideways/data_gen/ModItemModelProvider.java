@@ -21,6 +21,9 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         simpleItem(ModItems.PEANUT_ESSENCE);
         simpleItem(ModItems.PEANUT_JUICE);
+        simpleItem(ModItems.RAW_LUMINITE);
+        simpleItem(ModItems.LUMINITE_SHARD);
+
         saplingItem(ModBlocks.NUTROOT_SAPLING);
 
         simpleItem(ModItems.SIDEWAYS_CATALYST);

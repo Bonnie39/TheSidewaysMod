@@ -18,19 +18,25 @@ import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
 import org.slf4j.Logger;
+
+import java.nio.file.Path;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(TheSideways.MOD_ID)
 public class TheSideways {
     public static final String MOD_ID = "thesideways";
     private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve(TheSideways.MOD_ID);
 
     public TheSideways() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -42,6 +48,10 @@ public class TheSideways {
         for (DeferredRegister<?> register : registers) {
             register.register(modEventBus);
         }
+
+        DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, TheSidewaysConfig.SERVER_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TheSidewaysConfig.COMMON_SPEC);
 
         //  ITEMS AND BLOCKS
         ModItems.register(modEventBus);
@@ -69,6 +79,8 @@ public class TheSideways {
             event.accept(ModItems.PEANUT_ESSENCE);
             event.accept(ModItems.PEANUT_JUICE);
             event.accept(ModItems.SIDEWAYS_CATALYST);
+            event.accept(ModItems.RAW_LUMINITE);
+            event.accept(ModItems.LUMINITE_SHARD);
 
             //  BLOCKS
             event.accept(ModBlocks.SIDEWAYS_DIRT);
@@ -83,6 +95,7 @@ public class TheSideways {
             event.accept(ModBlocks.NUTROOT_LEAVES);
             event.accept(ModBlocks.NUTROOT_SAPLING);
             event.accept(ModBlocks.PEANUT_BLOCK);
+            event.accept(ModBlocks.LUMINITE_ORE);
             //event.accept(ModBlocks.SIDEWAYS_PORTAL);  //  Crashes game lmao
         }
     }

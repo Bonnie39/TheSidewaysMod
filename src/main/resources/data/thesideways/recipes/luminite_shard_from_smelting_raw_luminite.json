@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "group": "luminite_shard",
+  "ingredient": {
+    "item": "thesideways:raw_luminite"
+  },
+  "result": "thesideways:luminite_shard",
+  "experience": 0.7,
+  "cookingtime": 200
+}

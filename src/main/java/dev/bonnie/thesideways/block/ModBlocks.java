@@ -2,7 +2,7 @@ package dev.bonnie.thesideways.block;
 
 import dev.bonnie.thesideways.TheSideways;
 import dev.bonnie.thesideways.block.custom.ModFlammableRotatedPillarBlock;
-import dev.bonnie.thesideways.block.custom.SidewaysPortalBlock;
+import dev.bonnie.thesideways.block.custom.portal.SidewaysPortalBlock;
 import dev.bonnie.thesideways.item.ModItems;
 import dev.bonnie.thesideways.worldgen.tree.NutrootTreeGrower;
 import net.minecraft.core.BlockPos;
@@ -102,6 +102,9 @@ public class ModBlocks {
     //  PORTAL
     public static final RegistryObject<Block> SIDEWAYS_PORTAL = registerBlockWithoutBlockItem("sideways_portal",
             SidewaysPortalBlock::new);
+
+    /*public static final RegistryObject<SidewaysPortalBlock> SIDEWAYS_PORTAL = registerBlockWithoutBlockItem("sideways_portal",
+            () -> new SidewaysPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));*/
 
     //  HELPER FUNCTIONS
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

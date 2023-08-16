@@ -4,7 +4,6 @@ import dev.bonnie.thesideways.TheSideways;
 import dev.bonnie.thesideways.item.custom.CatalystItem;
 import dev.bonnie.thesideways.item.custom.DrinkableFoodItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.PotionItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,6 +24,8 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> LUMINITE_SHARD = ITEMS.register("luminite_shard",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PEANUT = ITEMS.register("peanut",
+            () -> new Item(new Item.Properties().food(ModFoods.PEANUT)));
 
     //  SOMETHING
     public static void register(IEventBus eventBus) {

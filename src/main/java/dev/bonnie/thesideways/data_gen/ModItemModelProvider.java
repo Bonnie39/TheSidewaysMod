@@ -27,6 +27,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         saplingItem(ModBlocks.NUTROOT_SAPLING);
 
         simpleItem(ModItems.SIDEWAYS_CATALYST);
+        simpleItem(ModItems.PEANUT);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

@@ -1,17 +1,21 @@
-package dev.bonnie.thesideways.block.custom;
+package dev.bonnie.thesideways.block.custom.portal;
 
 import dev.bonnie.thesideways.block.ModBlocks;
+import dev.bonnie.thesideways.capability.SidewaysCapabilities;
+import dev.bonnie.thesideways.capability.player.SidewaysPlayer;
+import dev.bonnie.thesideways.mixin.mixins.common.accessor.EntityAccessor;
 import dev.bonnie.thesideways.util.ModTags;
-import dev.bonnie.thesideways.util.SidewaysTeleporter;
-import dev.bonnie.thesideways.util.TheSidewaysTeleporter;
+import dev.bonnie.thesideways.util.LevelUtil;
 import dev.bonnie.thesideways.world.dimension.ModDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -27,16 +31,14 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
-public class SidewaysPortalBlock extends Block implements SidewaysPortalBlockAnimateTick {
+public class SidewaysPortalBlock extends Block /*implements SidewaysPortalBlockAnimateTick */{
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
     protected static final VoxelShape X_AABB = Block.box(0.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D);
     protected static final VoxelShape Z_AABB = Block.box(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
@@ -51,6 +53,7 @@ public class SidewaysPortalBlock extends Block implements SidewaysPortalBlockAni
         registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.X));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch(state.getValue(AXIS)) {
@@ -97,11 +100,12 @@ public class SidewaysPortalBlock extends Block implements SidewaysPortalBlockAni
         if (SidewaysPortalBlock$size.isValid() && SidewaysPortalBlock$size.portalBlockCount == 0) {
             return SidewaysPortalBlock$size;
         } else {
-            SidewaysPortalBlock.Size KaupenPortalBlock$size1 = new Size(worldIn, pos, Direction.Axis.Z);
-            return KaupenPortalBlock$size1.isValid() && KaupenPortalBlock$size1.portalBlockCount == 0 ? KaupenPortalBlock$size1 : null;
+            SidewaysPortalBlock.Size SidewaysPortalBlock$size1 = new Size(worldIn, pos, Direction.Axis.Z);
+            return SidewaysPortalBlock$size1.isValid() && SidewaysPortalBlock$size1.portalBlockCount == 0 ? SidewaysPortalBlock$size1 : null;
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         Direction.Axis direction$axis = facing.getAxis();
@@ -111,62 +115,72 @@ public class SidewaysPortalBlock extends Block implements SidewaysPortalBlockAni
                 Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
-        if(!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
-            if(entity.isOnPortalCooldown()) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        EntityAccessor entityAccessor = (EntityAccessor) entity;
+        if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
+            if (entity.isOnPortalCooldown()) {
                 entity.setPortalCooldown();
-            }
-            else {
-                if(!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
-                    entity.portalEntrancePos = pos.immutable();
+            } else {
+                if (!entity.getLevel().isClientSide() && !pos.equals(entityAccessor.sideways$getPortalEntrancePos())) {
+                    entityAccessor.sideways$setPortalEntrancePos(pos.immutable());
                 }
-                Level entityWorld = entity.level;
-                if(entityWorld != null) {
-                    MinecraftServer minecraftserver = entityWorld.getServer();
-                    ResourceKey<Level> destination = entity.level.dimension() == ModDimensions.SIDEWAYS_KEY
-                            ? Level.OVERWORLD : ModDimensions.SIDEWAYS_KEY;
-                    if(minecraftserver != null) {
-                        ServerLevel destinationWorld = minecraftserver.getLevel(destination);
-                        if(destinationWorld != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
-                            entity.level.getProfiler().push("SIDEWAYS_PORTAL");
-                            entity.setPortalCooldown();
-                            entity.changeDimension(destinationWorld, new TheSidewaysTeleporter(destinationWorld));
-                            entity.level.getProfiler().pop();
+                LazyOptional<SidewaysPlayer> sidewaysPlayer = entity.getCapability(SidewaysCapabilities.SIDEWAYS_PLAYER_CAPABILITY);
+                if (!sidewaysPlayer.isPresent()) {
+                    this.handleTeleportation(entity);
+                } else {
+                    sidewaysPlayer.ifPresent(handler -> {
+                        handler.setInPortal(true);
+                        int waitTime = handler.getPortalTimer();
+                        if (waitTime >= entity.getPortalWaitTime()) {
+                            this.handleTeleportation(entity);
+                            handler.setPortalTimer(0);
                         }
-                    }
+                    });
                 }
             }
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    //@Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
-        if (rand.nextInt(100) == 0) {
-            worldIn.playLocalSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D,
-                    (double)pos.getZ() + 0.5D, SoundEvents.PORTAL_AMBIENT,
-                    SoundSource.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
-        }
-
-        for(int i = 0; i < 4; ++i) {
-            double x = (double)pos.getX() + rand.nextDouble();
-            double y = (double)pos.getY() + rand.nextDouble();
-            double z = (double)pos.getZ() + rand.nextDouble();
-            double xSpeed = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-            double ySpeed = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-            double zSpeed = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-            int j = rand.nextInt(2) * 2 - 1;
-            if (!worldIn.getBlockState(pos.west()).is(this) && !worldIn.getBlockState(pos.east()).is(this)) {
-                x = (double)pos.getX() + 0.5D + 0.25D * (double)j;
-                xSpeed = rand.nextFloat() * 2.0F * (float)j;
-            } else {
-                z = (double)pos.getZ() + 0.5D + 0.25D * (double)j;
-                zSpeed = rand.nextFloat() * 2.0F * (float)j;
+    private void handleTeleportation(Entity entity) {
+        MinecraftServer server = entity.getLevel().getServer();
+        ResourceKey<Level> destinationKey = entity.getLevel().dimension() == ModDimensions.SIDEWAYS_KEY ? LevelUtil.returnDimension() : ModDimensions.SIDEWAYS_KEY;
+        if (server != null) {
+            ServerLevel destinationLevel = server.getLevel(destinationKey);
+            if (destinationLevel != null && !entity.isPassenger()) {
+                entity.getLevel().getProfiler().push("sideways_portal");
+                entity.setPortalCooldown();
+                entity.changeDimension(destinationLevel, new SidewaysPortalForcer(destinationLevel, true));
+                entity.getLevel().getProfiler().pop();
             }
+        }
+    }
 
-            // TODO: Particles
-            // worldIn.addParticle(PARTICLE_TYPE, x, y, z, xSpeed, ySpeed, zSpeed);
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.block.NetherPortalBlock#animateTick(BlockState, Level, BlockPos, RandomSource)}.
+     */
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (random.nextInt(100) == 0) {
+            level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
+        }
+        for (int i = 0; i < 4; ++i) {
+            double x = pos.getX() + random.nextDouble();
+            double y = pos.getY() + random.nextDouble();
+            double z = pos.getZ() + random.nextDouble();
+            double xSpeed = (random.nextFloat() - 0.5) * 0.5;
+            double ySpeed = (random.nextFloat() - 0.5) * 0.5;
+            double zSpeed = (random.nextFloat() - 0.5) * 0.5;
+            int j = random.nextInt(2) * 2 - 1;
+            if (!level.getBlockState(pos.west()).is(this) && !level.getBlockState(pos.east()).is(this)) {
+                x = pos.getX() + 0.5 + 0.25 * j;
+                xSpeed = random.nextFloat() * 2.0F * j;
+            } else {
+                z = pos.getZ() + 0.5 + 0.25 * j;
+                zSpeed = random.nextFloat() * 2.0F * j;
+            }
+            level.addParticle(ParticleTypes.PORTAL, x, y, z, xSpeed, ySpeed, zSpeed);
         }
     }
 
@@ -175,6 +189,7 @@ public class SidewaysPortalBlock extends Block implements SidewaysPortalBlockAni
         return ItemStack.EMPTY;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
         switch(rot) {

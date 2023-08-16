@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import dev.bonnie.thesideways.block.ModBlocks;
 import dev.bonnie.thesideways.item.ModCreativeModeTabs;
 import dev.bonnie.thesideways.item.ModItems;
+import dev.bonnie.thesideways.network.SidewaysPacketHandler;
 import dev.bonnie.thesideways.world.TSPoiTypes;
 import dev.bonnie.thesideways.world.dimension.ModDimensions;
 import dev.bonnie.thesideways.world.feature.SidewaysFeatures;
@@ -35,7 +36,7 @@ import java.nio.file.Path;
 @Mod(TheSideways.MOD_ID)
 public class TheSideways {
     public static final String MOD_ID = "thesideways";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve(TheSideways.MOD_ID);
 
     public TheSideways() {
@@ -49,7 +50,7 @@ public class TheSideways {
             register.register(modEventBus);
         }
 
-        DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
+        DIRECTORY.toFile().mkdirs(); // Ensures the mod config folder is generated.
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, TheSidewaysConfig.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TheSidewaysConfig.COMMON_SPEC);
 
@@ -71,6 +72,7 @@ public class TheSideways {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         Reflection.initialize(TheSidewaysPlacementModifiers.class);
+        SidewaysPacketHandler.register();
     }
 
     private void addCreative(CreativeModeTabEvent.BuildContents event) {
@@ -81,6 +83,7 @@ public class TheSideways {
             event.accept(ModItems.SIDEWAYS_CATALYST);
             event.accept(ModItems.RAW_LUMINITE);
             event.accept(ModItems.LUMINITE_SHARD);
+            event.accept(ModItems.PEANUT);
 
             //  BLOCKS
             event.accept(ModBlocks.SIDEWAYS_DIRT);

@@ -1,7 +1,7 @@
 package dev.bonnie.thesideways.item.custom;
 
 import dev.bonnie.thesideways.block.ModBlocks;
-import dev.bonnie.thesideways.block.custom.SidewaysPortalBlock;
+import dev.bonnie.thesideways.block.custom.portal.SidewaysPortalBlock;
 import dev.bonnie.thesideways.world.dimension.ModDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "dev.bonnie.thesideways.mixin.mixins",
+  "minVersion": "0.7",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "thesideways.refmap.json",
+  "mixins": [
+    "common.accessor.EntityAccessor"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

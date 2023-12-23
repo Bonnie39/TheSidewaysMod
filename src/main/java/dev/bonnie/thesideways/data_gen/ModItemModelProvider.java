@@ -23,11 +23,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.PEANUT_JUICE);
         simpleItem(ModItems.RAW_LUMINITE);
         simpleItem(ModItems.LUMINITE_SHARD);
+        simpleItem(ModItems.PEANUT);
+        simpleItem(ModItems.MALACHITE_CRYSTAL);
 
         saplingItem(ModBlocks.NUTROOT_SAPLING);
 
         simpleItem(ModItems.SIDEWAYS_CATALYST);
-        simpleItem(ModItems.PEANUT);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

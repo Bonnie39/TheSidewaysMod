@@ -3,6 +3,8 @@
   "values": [
     "thesideways:sideways_stone",
     "thesideways:sideways_cobblestone",
-    "thesideways:luminite_ore"
+    "thesideways:luminite_ore",
+    "thesideways:malachite_ore",
+    "thesideways:malachite_block"
   ]
 }

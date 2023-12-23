@@ -76,29 +76,39 @@ public class TheSideways {
     }
 
     private void addCreative(CreativeModeTabEvent.BuildContents event) {
-        if(event.getTab() == ModCreativeModeTabs.SIDEWAYS_TAB) {
-            //  ITEMS
+
+        //  ITEMS
+        if (event.getTab() == ModCreativeModeTabs.SIDEWAYS_TAB) {
             event.accept(ModItems.PEANUT_ESSENCE);
-            event.accept(ModItems.PEANUT_JUICE);
             event.accept(ModItems.SIDEWAYS_CATALYST);
             event.accept(ModItems.RAW_LUMINITE);
             event.accept(ModItems.LUMINITE_SHARD);
-            event.accept(ModItems.PEANUT);
+            event.accept(ModItems.MALACHITE_CRYSTAL);
+        }
 
-            //  BLOCKS
+        //  FOODSTUFFS
+        if (event.getTab() == ModCreativeModeTabs.SIDEWAYS_FOODSTUFFS) {
+            event.accept(ModItems.PEANUT);
+            event.accept(ModItems.PEANUT_JUICE);
+        }
+
+        //  BLOCKS
+        if(event.getTab() == ModCreativeModeTabs.SIDEWAYS_BLOCKS) {
+            event.accept(ModBlocks.SIDEWAYS_GRASS_BLOCK);
             event.accept(ModBlocks.SIDEWAYS_DIRT);
             event.accept(ModBlocks.SIDEWAYS_STONE);
             event.accept(ModBlocks.SIDEWAYS_COBBLESTONE);
-            event.accept(ModBlocks.SIDEWAYS_GRASS_BLOCK);
             event.accept(ModBlocks.NUTROOT_LOG);
             event.accept(ModBlocks.STRIPPED_NUTROOT_LOG);
-            event.accept(ModBlocks.NUTROOT_WOOD);
-            event.accept(ModBlocks.STRIPPED_NUTROOT_WOOD);
+            //event.accept(ModBlocks.NUTROOT_WOOD);             //  secret wood type
+            //event.accept(ModBlocks.STRIPPED_NUTROOT_WOOD);    //  secret wood type
             event.accept(ModBlocks.NUTROOT_PLANKS);
             event.accept(ModBlocks.NUTROOT_LEAVES);
             event.accept(ModBlocks.NUTROOT_SAPLING);
             event.accept(ModBlocks.PEANUT_BLOCK);
             event.accept(ModBlocks.LUMINITE_ORE);
+            event.accept(ModBlocks.MALACHITE_ORE);
+            event.accept(ModBlocks.MALACHITE_BLOCK);
             //event.accept(ModBlocks.SIDEWAYS_PORTAL);  //  Crashes game lmao
         }
     }

@@ -1,5 +1,7 @@
-// 1.19.4	2023-08-13T19:01:58.0695323	Block States: thesideways
+// 1.19.4	2023-12-23T13:47:39.0219594	Block States: thesideways
 af99c45df841c3d276ada42d291511336983fb6c assets/thesideways/blockstates/luminite_ore.json
+fdf440000ec5a7ad29b607eec45d4a63b3c6dbe9 assets/thesideways/blockstates/malachite_block.json
+cd442f95ad9b47060187266f70638f7277d5b68d assets/thesideways/blockstates/malachite_ore.json
 b7a968bfd572513c65ee44890d9abae80f329277 assets/thesideways/blockstates/nutroot_leaves.json
 e43cb7709c816afad887fa002e09edfa3cca2323 assets/thesideways/blockstates/nutroot_log.json
 95e30a56997b0a58b30a795980a667979d72cea1 assets/thesideways/blockstates/nutroot_planks.json
@@ -12,6 +14,8 @@ cb6f386b6f859e5ac64b6de9add0686dd757fa38 assets/thesideways/blockstates/sideways
 fe93a1b018663a26bb4f767f9cf79c4611d7f717 assets/thesideways/blockstates/stripped_nutroot_log.json
 c76cc68072d312884b79a6cd4fd6230a66a85459 assets/thesideways/blockstates/stripped_nutroot_wood.json
 f36ae9fb8217e21dbb0380ebe448def5e60b2f4f assets/thesideways/models/block/luminite_ore.json
+1b9934123b4b5c30b3aec5d6aedaf48b080aa0e6 assets/thesideways/models/block/malachite_block.json
+4378732f0e61be9581a683e8f50450c183bd7a10 assets/thesideways/models/block/malachite_ore.json
 80960260234c1509056c17b5511c91d47f8acd41 assets/thesideways/models/block/nutroot_leaves.json
 acc8980086328d6c72b433a18fca2d31819c2249 assets/thesideways/models/block/nutroot_log.json
 82a95bcc2d3e788ce87e2c5fe119d3ed4db45cd1 assets/thesideways/models/block/nutroot_log_horizontal.json
@@ -28,6 +32,8 @@ b93da98cd29f323fb8f0af7e5cc7fafba3c2c1f4 assets/thesideways/models/block/strippe
 443649158cf9085ee6deada6fe02b85f9953b1f3 assets/thesideways/models/block/stripped_nutroot_wood.json
 7809d72321366499cd40a5513b133e1e7db2970c assets/thesideways/models/block/stripped_nutroot_wood_horizontal.json
 aa649c506ce7a6ea81fc30f117914c77b42a5362 assets/thesideways/models/item/luminite_ore.json
+6d0b56473ca063d7b6ebb6ee8bb33eea1a4c7b0a assets/thesideways/models/item/malachite_block.json
+0c95ba493d9e18254fe3ae8b39261aad6a9a2f4a assets/thesideways/models/item/malachite_ore.json
 a4942e2eefc6e6794af37e35e785fc14f4d0412b assets/thesideways/models/item/nutroot_leaves.json
 c7c93fc405a420004876d3f72e356b1bacdf89a4 assets/thesideways/models/item/nutroot_log.json
 33a49cd920cc7bfbca7dbbb23cb8061842ac1cfd assets/thesideways/models/item/nutroot_planks.json

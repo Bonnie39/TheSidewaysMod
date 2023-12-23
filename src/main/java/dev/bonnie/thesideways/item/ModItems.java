@@ -24,6 +24,8 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> LUMINITE_SHARD = ITEMS.register("luminite_shard",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> MALACHITE_CRYSTAL = ITEMS.register("malachite_crystal",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PEANUT = ITEMS.register("peanut",
             () -> new Item(new Item.Properties().food(ModFoods.PEANUT)));
 

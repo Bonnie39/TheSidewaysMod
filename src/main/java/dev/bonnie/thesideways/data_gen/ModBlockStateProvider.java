@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -24,6 +25,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.SIDEWAYS_STONE);
         blockWithItem(ModBlocks.SIDEWAYS_COBBLESTONE);
         blockWithItem(ModBlocks.LUMINITE_ORE);
+        blockWithItem(ModBlocks.MALACHITE_ORE);
+        blockWithItem(ModBlocks.MALACHITE_BLOCK);
 
         logBlock(((RotatedPillarBlock) ModBlocks.NUTROOT_LOG.get()));
         axisBlock((RotatedPillarBlock) ModBlocks.NUTROOT_WOOD.get(), blockTexture(ModBlocks.NUTROOT_LOG.get()), blockTexture(ModBlocks.NUTROOT_LOG.get()));

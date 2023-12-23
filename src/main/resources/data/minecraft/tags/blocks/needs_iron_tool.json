@@ -1,5 +1,7 @@
 {
   "replace": false,
   "values": [
+    "thesideways:malachite_ore",
+    "thesideways:malachite_block"
   ]
 }

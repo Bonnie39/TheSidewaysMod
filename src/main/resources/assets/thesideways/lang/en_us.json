@@ -5,6 +5,7 @@
   "item.thesideways.raw_luminite": "Raw Luminite",
   "item.thesideways.luminite_shard": "Luminite Shard",
   "item.thesideways.peanut": "Peanut",
+  "item.thesideways.malachite_crystal": "Malachite Crystal",
 
   "block.thesideways.peanut_block": "Peanut Block",
   "block.thesideways.sideways_dirt": "Sideways Dirt",
@@ -19,6 +20,10 @@
   "block.thesideways.sideways_stone": "Sideways Stone",
   "block.thesideways.sideways_cobblestone": "Sideways Cobblestone",
   "block.thesideways.luminite_ore": "Luminite Ore",
+  "block.thesideways.malachite_ore": "Malachite Ore",
+  "block.thesideways.malachite_block": "Malachite Block",
 
-  "creativemodetab.sideways_tab": "The Sideways"
+  "creativemodetab.sideways_tab": "The Sideways",
+  "creativemodetab.sideways_blocks": "The Sideways - Blocks",
+  "creativemodetab.sideways_foodstuffs": "The Sideways - FoodStuffs"
 }

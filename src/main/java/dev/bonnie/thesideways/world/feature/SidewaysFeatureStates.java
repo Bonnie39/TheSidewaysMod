@@ -5,4 +5,5 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SidewaysFeatureStates {
     public static final BlockState LUMINITE_ORE = ModBlocks.LUMINITE_ORE.get().defaultBlockState();
+    public static final BlockState MALACHITE_ORE = ModBlocks.MALACHITE_ORE.get().defaultBlockState();
 }

@@ -29,6 +29,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> GRASS_PATCH_PLACEMENT = createKey("grass_patch");
     public static final ResourceKey<PlacedFeature> TALL_GRASS_PATCH_PLACEMENT = createKey("tall_grass_patch");
     public static final ResourceKey<PlacedFeature> ORE_LUMINITE_PLACEMENT = createKey("luminite_ore");
+    public static final ResourceKey<PlacedFeature> ORE_MALACHITE_PLACEMENT = createKey("malachite_ore");
 
     private static ResourceKey<PlacedFeature> createKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(TheSideways.MOD_ID, name));
@@ -60,6 +61,9 @@ public class ModPlacedFeatures {
 
         register(context, ORE_LUMINITE_PLACEMENT, configuredFeatures.getOrThrow(ModConfiguredFeatures.ORE_LUMINITE_CONFIGURATION),
                 SidewaysPlacedFeatureBuilders.commonOrePlacement(20, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(128))));
+
+        register(context, ORE_MALACHITE_PLACEMENT, configuredFeatures.getOrThrow(ModConfiguredFeatures.ORE_MALACHITE_CONFIGURATION),
+                SidewaysPlacedFeatureBuilders.commonOrePlacement(8, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(128))));
     }
 
     private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {

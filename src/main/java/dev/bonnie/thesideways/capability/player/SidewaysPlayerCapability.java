@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.commons.lang3.tuple.Triple;
 
-import java.util.*;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 

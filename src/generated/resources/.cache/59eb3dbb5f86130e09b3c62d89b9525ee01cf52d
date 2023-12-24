@@ -1,7 +1,7 @@
-// 1.19.4	2023-12-23T13:47:39.0209594	Loot Tables
+// 1.19.4	2023-12-24T15:32:06.0093561	Loot Tables
 8c1437ddb3c3cc74f8e559ac8bc66f868abd3156 data/thesideways/loot_tables/blocks/luminite_ore.json
 1f7bbc9746db1d4c4d275052c4d8ca862b457e72 data/thesideways/loot_tables/blocks/malachite_block.json
-f5d4556721894fa22484df0f16e9c1c1954be463 data/thesideways/loot_tables/blocks/malachite_ore.json
+4685015cc8fddbe24f8c824a54feb58397a9aa23 data/thesideways/loot_tables/blocks/malachite_ore.json
 c5380fbc01cbe1a246d3771cd5a0f0685ad0c539 data/thesideways/loot_tables/blocks/nutroot_leaves.json
 f428e25fedc7b3a7ff44c073ef1a016f3e4ea362 data/thesideways/loot_tables/blocks/nutroot_log.json
 da900aba2d686fda35cf930073a007bbd5cb8ce3 data/thesideways/loot_tables/blocks/nutroot_planks.json

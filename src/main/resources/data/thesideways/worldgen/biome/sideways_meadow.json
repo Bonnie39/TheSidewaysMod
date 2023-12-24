@@ -4,14 +4,14 @@
   "downfall": 0.0,
   "effects": {
     "fog_color": 12365203,
-    "foliage_color": 16236652,
-    "grass_color": 16236652,
+    "foliage_color": 16565101,
+    "grass_color": 16565101,
     "music": {
       "max_delay": 24000,
       "min_delay": 12000
     },
     "sky_color": 16770752,
-    "water_color": 7234106,
+    "water_color": 14595693,
     "water_fog_color": 3024399
   },
   "features": [

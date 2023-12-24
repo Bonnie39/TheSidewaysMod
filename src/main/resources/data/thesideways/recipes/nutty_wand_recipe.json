@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    " D ",
+    "/  "
+  ],
+  "key": {
+    "#": {
+      "item": "thesideways:peanut"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "thesideways:sideways_catalyst",
+    "count": 1
+  }
+}

@@ -3,13 +3,8 @@ package dev.bonnie.thesideways.capability.player;
 import dev.bonnie.thesideways.capability.INBTSynchable;
 import dev.bonnie.thesideways.capability.SidewaysCapabilities;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.UUID;
 public interface SidewaysPlayer extends INBTSynchable<CompoundTag> {
     Player getPlayer();
 

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "thesideways:malachite_ore"
+  },
+  "result": "thesideways:malachite_crystal",
+  "experience": 1.4,
+  "cookingtime": 113
+}

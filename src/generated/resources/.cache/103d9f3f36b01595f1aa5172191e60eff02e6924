@@ -1,4 +1,4 @@
-// 1.19.4	2023-12-23T16:43:45.815762	Registries
+// 1.19.4	2023-12-24T14:43:51.0584926	Registries
 c75a69a06a66ad5a2ab402d7bca52e3e58098362 data/thesideways/worldgen/configured_feature/grass_patch.json
 6b89cf197560d2f0286193a4ad084c6ab64059e9 data/thesideways/worldgen/configured_feature/luminite_ore.json
 bce0e5b897875c6a20818a28094139036026f433 data/thesideways/worldgen/configured_feature/malachite_ore.json
@@ -9,7 +9,7 @@ d34e9d2ef4b473a6425b08cfe754d90a88213192 data/thesideways/worldgen/configured_fe
 bfceef8c2987f4b06f5c331b3b20b85cdfc23768 data/thesideways/worldgen/configured_feature/water_lake.json
 9b04d51f3cfef0ae3bcab5834507720f1b1ed51a data/thesideways/worldgen/placed_feature/grass_patch.json
 045bd0b06006ba3979e3d56acb79eaef17679226 data/thesideways/worldgen/placed_feature/luminite_ore.json
-8c8f1011cf6ed7022e4d255a810d5c37c30ea8eb data/thesideways/worldgen/placed_feature/malachite_ore.json
+466ae8482484b0ff534c29d5061c5283c5d6a461 data/thesideways/worldgen/placed_feature/malachite_ore.json
 e44dffee39b3cef39a47220d3faa861e1cbb1bfa data/thesideways/worldgen/placed_feature/nutroot_meadow_trees.json
 10281d423157f205b24d55a771de99a443e978df data/thesideways/worldgen/placed_feature/tall_grass_patch.json
 49bc8435422e405719f22a2d5112c159ce8566a2 data/thesideways/worldgen/placed_feature/water_lake.json

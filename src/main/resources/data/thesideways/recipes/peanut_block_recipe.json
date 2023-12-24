@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "thesideways:peanut_essence"
+    },
+    "P": {
+      "item": "thesideways:peanut"
+    }
+  },
+  "result": {
+    "item": "thesideways:peanut_block",
+    "count": 1
+  }
+}

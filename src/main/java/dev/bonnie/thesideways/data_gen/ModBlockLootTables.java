@@ -4,10 +4,7 @@ import dev.bonnie.thesideways.block.ModBlocks;
 import dev.bonnie.thesideways.item.ModItems;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Set;
@@ -31,6 +28,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.NUTROOT_SAPLING.get());
         this.dropSelf(ModBlocks.PEANUT_BLOCK.get());
         this.dropSelf(ModBlocks.SIDEWAYS_COBBLESTONE.get());
+        this.dropSelf(ModBlocks.MALACHITE_ORE.get());
         this.dropSelf(ModBlocks.MALACHITE_BLOCK.get());
 
         this.add(ModBlocks.SIDEWAYS_STONE.get(), (block) ->
@@ -41,9 +39,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.add(ModBlocks.LUMINITE_ORE.get(), (block) ->
                 createOreDrop(ModBlocks.LUMINITE_ORE.get(), ModItems.RAW_LUMINITE.get()));
-
-        this.add(ModBlocks.MALACHITE_ORE.get(), (block) ->
-                createOreDrop(ModBlocks.MALACHITE_ORE.get(), ModItems.MALACHITE_CRYSTAL.get()));
     }
 
     @Override

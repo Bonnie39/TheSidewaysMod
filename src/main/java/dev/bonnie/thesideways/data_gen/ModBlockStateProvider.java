@@ -2,14 +2,12 @@ package dev.bonnie.thesideways.data_gen;
 
 import dev.bonnie.thesideways.TheSideways;
 import dev.bonnie.thesideways.block.ModBlocks;
-import dev.bonnie.thesideways.block.custom.ModFlammableRotatedPillarBlock;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 

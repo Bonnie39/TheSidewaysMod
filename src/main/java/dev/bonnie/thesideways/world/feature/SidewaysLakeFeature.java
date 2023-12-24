@@ -1,7 +1,7 @@
 package dev.bonnie.thesideways.world.feature;
 
-import dev.bonnie.thesideways.world.configuration.SidewaysLakeConfiguration;
 import com.mojang.serialization.Codec;
+import dev.bonnie.thesideways.world.configuration.SidewaysLakeConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;

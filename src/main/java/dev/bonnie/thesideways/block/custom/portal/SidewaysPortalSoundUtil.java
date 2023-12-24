@@ -1,10 +1,8 @@
 package dev.bonnie.thesideways.block.custom.portal;
 
-import dev.bonnie.thesideways.client.SidewaysSoundEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 
 public class SidewaysPortalSoundUtil {

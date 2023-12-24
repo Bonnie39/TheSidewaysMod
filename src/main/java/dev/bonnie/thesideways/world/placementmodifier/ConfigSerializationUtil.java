@@ -1,7 +1,6 @@
 package dev.bonnie.thesideways.world.placementmodifier;
 
 import com.google.gson.JsonSyntaxException;
-import dev.bonnie.thesideways.TheSideways;
 import dev.bonnie.thesideways.TheSidewaysConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
 

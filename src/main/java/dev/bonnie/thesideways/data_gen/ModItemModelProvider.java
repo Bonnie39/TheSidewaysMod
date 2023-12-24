@@ -28,7 +28,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         saplingItem(ModBlocks.NUTROOT_SAPLING);
 
-        simpleItem(ModItems.SIDEWAYS_CATALYST);
+        handheldItem(ModItems.SIDEWAYS_CATALYST);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

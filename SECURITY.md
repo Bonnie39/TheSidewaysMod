@@ -7,8 +7,8 @@ All previous test builds are obsolete and I advise against using them.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| a0.1.1  | :white_check_mark: |
-| <a0.1.1 | :x:                |
+| a0.1.3  | :white_check_mark: |
+| <a0.1.3 | :x:                |
 
 ## Reporting a Vulnerability
 

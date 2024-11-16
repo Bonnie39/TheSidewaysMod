@@ -30,19 +30,26 @@ public class ModBlocks {
     public static final RegistryObject<Block> SIDEWAYS_DIRT = registerBlock("sideways_dirt",
             () -> new Block(BlockBehaviour.Properties.of(Material.DIRT)
                     .strength(0.5f).sound(SoundType.GRAVEL).explosionResistance(0.5f)));
+
     public static final RegistryObject<Block> SIDEWAYS_GRASS_BLOCK = registerBlock("sideways_grass_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.DIRT)
                     .strength(0.6f).sound(SoundType.GRASS).explosionResistance(0.6f)));
+
     public static final RegistryObject<Block> SIDEWAYS_STONE = registerBlock("sideways_stone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+
     public static final RegistryObject<Block> SIDEWAYS_COBBLESTONE = registerBlock("sideways_cobblestone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)));
+
     public static final RegistryObject<Block> LUMINITE_ORE = registerBlock("luminite_ore",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
+
     public static final RegistryObject<Block> MALACHITE_ORE = registerBlock("malachite_ore",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
+
     public static final RegistryObject<Block> MALACHITE_BLOCK = registerBlock("malachite_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK)));
+
     public static final RegistryObject<Block> PEANUT_BLOCK = registerBlock("peanut_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
                     .strength(2f).sound(SoundType.WOOD).explosionResistance(2f)));
@@ -51,12 +58,15 @@ public class ModBlocks {
     public static final RegistryObject<Block> NUTROOT_LOG = registerBlock("nutroot_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)
                     .strength(2f).sound(SoundType.WOOD).explosionResistance(2f)));
+
     public static final RegistryObject<Block> NUTROOT_WOOD = registerBlock("nutroot_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)
                     .strength(2f).sound(SoundType.WOOD).explosionResistance(2f)));
+
     public static final RegistryObject<Block> STRIPPED_NUTROOT_LOG = registerBlock("stripped_nutroot_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)
                     .strength(2f).sound(SoundType.WOOD).explosionResistance(2f)));
+
     public static final RegistryObject<Block> STRIPPED_NUTROOT_WOOD = registerBlock("stripped_nutroot_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)
                     .strength(2f).sound(SoundType.WOOD).explosionResistance(2f)));
@@ -100,6 +110,7 @@ public class ModBlocks {
                     return 60;
                 }
             });
+
     public static final RegistryObject<Block> NUTROOT_SAPLING = registerBlock("nutroot_sapling",
             () -> new SaplingBlock(new NutrootTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
